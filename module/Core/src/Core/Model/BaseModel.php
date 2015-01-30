@@ -5,8 +5,8 @@ namespace Core\Model;
 
 use Doctrine\ORM\EntityManager;
 
-abstract class BaseModel {
-
+abstract class BaseModel
+{
     protected $entityManager, $entity, $repository;
 
     public function __construct(EntityManager $em, $entity)
@@ -26,5 +26,4 @@ abstract class BaseModel {
     {
         return  $this->repository->find($id);
     }
-
 }

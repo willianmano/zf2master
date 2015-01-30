@@ -12,7 +12,7 @@ abstract class BaseEntity
      */
     public function __get($property)
     {
-        if(property_exists($this, $property)) {
+        if (property_exists($this, $property)) {
             $reflection = new \ReflectionProperty($this, $property);
             $reflection->setAccessible($property);
             return $reflection->getValue($this);
@@ -27,7 +27,7 @@ abstract class BaseEntity
      */
     public function __set($property, $value)
     {
-        if(property_exists($this, $property)) {
+        if (property_exists($this, $property)) {
             $reflection = new \ReflectionProperty($this, $property);
             $reflection->setAccessible($property);
             $reflection->setValue($this, $value);
