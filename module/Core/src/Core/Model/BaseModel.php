@@ -3,8 +3,6 @@
 namespace Core\Model;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Core\Entity\BaseEntity;
 
 abstract class BaseModel
 {

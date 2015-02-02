@@ -9,7 +9,6 @@
 
 namespace Application\Controller;
 
-use Admin\Entity\SegModulos;
 use Admin\Model\SegUsuariosModel;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
