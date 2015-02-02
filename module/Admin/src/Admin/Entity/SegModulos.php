@@ -50,5 +50,14 @@ class SegModulos extends BaseEntity
      */
     private $modAtivo = '0';
 
+    public function exchangeArray($data)
+    {
+        $this->modId = (isset($data['modId'])) ? $data['modId'] : null;
+        $this->modNome = (isset($data['modNome'])) ? $data['modNome'] : null;
+        $this->modDescricao = (isset($data['modDescricao'])) ? $data['modDescricao'] : null;
+        $this->modIcone = (isset($data['modIcone'])) ? $data['modIcone'] : 'icon-cog';
+        $this->modAtivo = (isset($data['modAtivo'])) ? $data['modAtivo'] : '0';
+    }
+
 
 }

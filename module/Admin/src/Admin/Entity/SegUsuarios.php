@@ -72,6 +72,22 @@ class SegUsuarios extends BaseEntity
     private $pruPrf;
 
     /**
+     * Populate the object from an array.
+     *
+     * @param $data
+     */
+    public function exchangeArray($data)
+    {
+        $this->usrId = (isset($data['usrId'])) ? $data['usrId'] : null;
+        $this->usrNome = (isset($data['usrNome'])) ? $data['usrNome'] : null;
+        $this->usrEmail = (isset($data['usrEmail'])) ? $data['usrEmail'] : null;
+        $this->usrTelefone = (isset($data['usrTelefone'])) ? $data['usrTelefone'] : null;
+        $this->usrUsuario = (isset($data['usrUsuario'])) ? $data['usrUsuario'] : null;
+        $this->usrSenha = (isset($data['usrSenha'])) ? $data['usrSenha'] : null;
+        $this->usrAtivo = (isset($data['usrAtivo'])) ? $data['usrAtivo'] : '1';
+    }
+
+    /**
      * Constructor
      */
     public function __construct()
