@@ -1,0 +1,13 @@
+{% extends 'layout/layout_admin.twig' %}
+
+{% block content %}
+    <h3>Novo Módulo</h3>
+
+    {{ form().openTag(form)|raw }}
+    {{ elementToRow(form.get('modNome')) }}
+    {{ elementToRow(form.get('modDescricao')) }}
+    {{ elementToRow(form.get('modIcone')) }}
+    {{ formSubmit(form.get('submit')) }}
+
+    {{ form().closeTag(form)|raw }}
+{% endblock content %}
