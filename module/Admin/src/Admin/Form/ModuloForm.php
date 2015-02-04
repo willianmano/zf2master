@@ -16,26 +16,26 @@ class ModuloForm extends Form
         $this->setAttribute('role','form');
         $this->setAttribute('action', '/admin/modulos/create');
 
-        $mod_id = new Element\Hidden('modId');
+        $modId = new Element\Hidden('modId');
 
-        $mod_nome = new Element\Text('modNome');
-        $mod_nome->setName('modNome')
+        $modNome = new Element\Text('modNome');
+        $modNome->setName('modNome')
             ->setAttribute('id', 'modNome')
             ->setAttribute('placeholder', 'Nome do módulo')
             ->setAttribute('class', 'form-control')
             ->setLabel('Nome do módulo')
             ->setLabelAttributes(array('class'=>'col-sm-3 control-label'));
 
-        $mod_descricao = new Element\Text('modDescricao');
-        $mod_descricao->setName('modDescricao')
+        $modDescricao = new Element\Text('modDescricao');
+        $modDescricao->setName('modDescricao')
             ->setAttribute('id', 'modDescricao')
             ->setAttribute('placeholder', 'Descrição do módulo')
             ->setAttribute('class', 'form-control')
             ->setLabel('Descrição do módulo')
             ->setLabelAttributes(array('class'=>'col-sm-3 control-label'));
 
-        $mod_icone = new Element\Text('modIcone');
-        $mod_icone->setName('modIcone')
+        $modIcone = new Element\Text('modIcone');
+        $modIcone->setName('modIcone')
             ->setAttribute('id', 'modIcone')
             ->setAttribute('placeholder', 'Ícone do módulo')
             ->setAttribute('class', 'form-control')
@@ -46,10 +46,10 @@ class ModuloForm extends Form
         $submit->setAttribute('value', 'Salvar')
             ->setAttribute('class', 'btn btn-info');
 
-        $this->add($mod_id)
-            ->add($mod_nome)
-            ->add($mod_descricao)
-            ->add($mod_icone)
+        $this->add($modId)
+            ->add($modNome)
+            ->add($modDescricao)
+            ->add($modIcone)
             ->add($submit);
     }
 }

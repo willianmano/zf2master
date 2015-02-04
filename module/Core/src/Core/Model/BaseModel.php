@@ -6,7 +6,9 @@ use Doctrine\ORM\EntityManager;
 
 abstract class BaseModel
 {
-    protected $entityManager, $entity, $repository;
+    protected $entityManager, $repository, $entity;
+
+    public $entityPrimaryKey;
 
     public function __construct(EntityManager $em, $entity)
     {
@@ -19,6 +21,8 @@ abstract class BaseModel
         $this->entity = $entity;
 
         $this->repository = $this->entityManager->getRepository($entity);
+
+        $this->entityPrimaryKey = $entity::getIdentifier();
     }
 
     public function findAll()
@@ -117,5 +121,36 @@ abstract class BaseModel
         }
 
         return true;
+    }
+
+    /*
+   * Carrega os itens passando um campo e o valor
+   * Ex. array($attributes => $value)
+   */
+    public function getByAttributes(Array $array)
+    {
+        return $this->repository->findBy($array);
+    }
+
+    //Popula Select
+    public function getAllItensToSelect($attributeId,$attributeLabel)
+    {
+        $data = $this->findAll();
+
+        $returnObject = array();
+        foreach ($data as $key => $value) {
+            $returnObject[$value->$attributeId] = $value->$attributeLabel;
+        }
+
+        return $returnObject;
+    }
+    public function getAllItensToSelectByAttributesJsonReturn(Array $attributes, $attributeId, $attributeLabel) {
+        $data = $this->getByAttributes($attributes);
+
+        $returnObject = array();
+        foreach ($data as $key => $value) {
+            $returnObject[] = array($attributeId => $value->$attributeId,  $attributeLabel => $value->$attributeLabel);
+        }
+        return $returnObject;
     }
 }

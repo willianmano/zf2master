@@ -51,6 +51,11 @@ class SegModulos extends BaseEntity implements EntityInterface
      */
     private $modAtivo = '0';
 
+    public static function getIdentifier()
+    {
+        return 'modId';
+    }
+
     public function exchangeArray($data)
     {
         $this->modNome = (isset($data['modNome'])) ? $data['modNome'] : null;

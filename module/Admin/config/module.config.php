@@ -5,13 +5,15 @@ namespace Admin;
 return array(
     'controllers' => array(
         'factories' => array(
-            'Admin\Controller\Modulos' => 'Admin\Controller\Factory\ModulosControllerFactory'
+            'Admin\Controller\Modulos' => 'Admin\Controller\Factory\ModulosControllerFactory',
+            'Admin\Controller\CategoriasRecursos' => 'Admin\Controller\Factory\CategoriasRecursosControllerFactory'
         )
     ),
     'service_manager' => array(
         'factories' => array(
             'Admin\Model\SegUsuariosModel' => 'Admin\Model\Factory\SegUsuariosModelFactory',
             'Admin\Model\SegModulosModel' => 'Admin\Model\Factory\SegModulosModelFactory',
+            'Admin\Model\SegCategoriasRecursosModel' => 'Admin\Model\Factory\SegCategoriasRecursosModelFactory',
         ),
         'invokables' => array(
             'Admin\Form\ModuloForm' => 'Admin\Form\ModuloForm',

@@ -24,7 +24,11 @@ class ToArrayExtension extends \Twig_Extension
             return $returnArray;
         }
 
-        return get_object_vars($object);
+        if(is_object($object)) {
+            return get_object_vars($object);
+        }
+
+        return null;
     }
 
     public function getName()

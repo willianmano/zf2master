@@ -2,6 +2,7 @@
 
 namespace Admin\Entity;
 
+use Core\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Core\Entity\BaseEntity;
 
@@ -11,7 +12,7 @@ use Core\Entity\BaseEntity;
  * @ORM\Table(name="seg_categorias_recursos")
  * @ORM\Entity
  */
-class SegCategoriasRecursos extends BaseEntity
+class SegCategoriasRecursos extends BaseEntity implements EntityInterface
 {
     /**
      * @var integer
@@ -43,5 +44,16 @@ class SegCategoriasRecursos extends BaseEntity
      */
     private $ctrIcone = 'icon-bookmark';
 
+    public static function getIdentifier()
+    {
+        return 'ctrId';
+    }
+
+    public function exchangeArray($data)
+    {
+        $this->ctrNome = (isset($data['ctrNome'])) ? $data['ctrNome'] : null;
+        $this->ctrDescricao = (isset($data['ctrDescricao'])) ? $data['ctrDescricao'] : null;
+        $this->ctrIcone = (isset($data['ctrIcone'])) ? $data['ctrIcone'] : 'icon-bookmark';
+    }
 
 }
