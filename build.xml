@@ -1,151 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project name="TheProject" default="build" basedir=".">
-
-    <!-- Altere estas propriedades adequando-as ao seu projeto -->
-    <property name="application.library" value="${project.basedir}/library"/>
-    <property name="application.tests" value="${project.basedir}/tests"/>
-    <property name="application.builddir" value="${project.basedir}/build"/>
-
+ 
+<project name="name-of-project" default="build">
+    <property name="basedir" value="." />
     <target name="build"
-        depends="prepare,lint,phploc,pdepend,phpmd,phpcs,phpcpd,phpdoc,phpunit,phpcb"/>
-
-    <target name="clean" description="Limpa os diretÃ³rios de artefatos">
-        <delete dir="${application.builddir}/api"/>
-        <delete dir="${application.builddir}/code-browser"/>
-        <delete dir="${application.builddir}/coverage"/>
-        <delete dir="${application.builddir}/logs"/>
-        <delete dir="${application.builddir}/pdepend"/>
+            depends="prepare,lint,phploc,pdepend,phpmd,phpcs,phpcpd,phpdoc,phpunit,phpcb"/>
+ 
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${basedir}/build/api"/>
+        <delete dir="${basedir}/build/code-browser"/>
+        <delete dir="${basedir}/build/coverage"/>
+        <delete dir="${basedir}/build/logs"/>
+        <delete dir="${basedir}/build/pdepend"/>
     </target>
-
-    <target name="prepare" depends="clean" description="Cria os diretÃ³rios de artefatos">
-        <mkdir dir="${application.builddir}/api"/>
-        <mkdir dir="${application.builddir}/code-browser"/>
-        <mkdir dir="${application.builddir}/coverage"/>
-        <mkdir dir="${application.builddir}/logs"/>
-        <mkdir dir="${application.builddir}/pdepend"/>
+ 
+    <target name="prepare" depends="clean"
+            description="Prepare for build">
+        <echo msg="${basedir}" />
+        <mkdir dir="${basedir}/build/api"/>
+        <mkdir dir="${basedir}/build/code-browser"/>
+        <mkdir dir="${basedir}/build/coverage"/>
+        <mkdir dir="${basedir}/build/logs"/>
+        <mkdir dir="${basedir}/build/pdepend"/>
     </target>
-
+ 
     <target name="lint">
         <phplint>
-            <fileset dir="${application.library}">
+            <fileset dir="${basedir}">
                 <include name="**/*.php" />
-            </fileset>
-            <fileset dir="${application.tests}">
-                <include name="**/*.php" />
+                <exclude name="**/tests/**" />
             </fileset>
         </phplint>
     </target>
-
-    <target name="phploc" description="Mede o tamanho da aplicaÃ§Ã£o">
+ 
+    <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="phploc">
             <arg value="--log-csv" />
-            <arg value="${application.builddir}/logs/phploc.csv" />
-            <arg path="${application.library}" />
-            </exec>
+            <arg value="${basedir}/build/logs/phploc.csv" />
+            <arg value="--exclude"/>
+            <arg path="${basedir}/tests" />
+            <arg value="--suffixes"/>
+            <arg value="php" />
+            <arg path="${basedir}" />
+        </exec>
     </target>
-
-    <target name="pdepend" description="Calcula mÃ©tricas de software">
+ 
+    <target name="pdepend">
         <phpdepend>
-            <fileset dir="${application.library}">
+            <fileset dir="${basedir}">
                 <include name="**/*.php" />
+                <exclude name="**/tests/**" />
             </fileset>
-            <logger type="jdepend-xml"
-                outfile="${application.builddir}/logs/jdepend.xml"/>
-            <logger type="jdepend-chart"
-                outfile="${application.builddir}/pdepend/dependencies.svg"/>
-            <logger type="overview-pyramid"
-                outfile="${application.builddir}/pdepend/overview-pyramid.svg"/>
-            <analyzer type="coderank-mode" value="method"/>
+            <logger type="jdepend-xml" outfile="${basedir}/build/logs/jdepend.xml"/>
+            <logger type="jdepend-chart" outfile="${basedir}/build/pdepend/dependencies.svg"/>
+            <logger type="overview-pyramid" outfile="${basedir}/build/pdepend/overview-pyramid.svg"/>
         </phpdepend>
     </target>
-
-    <target name="phpmd" description="DetecÃ§Ã£o de bagunÃ§a de cÃ³digo">
-        <phpmd rulesets="${application.builddir}/phpmd.xml">
-            <fileset dir="${application.library}">
+ 
+    <target name="phpmd"
+            description="Generate pmd.xml using PHPMD">
+        <phpmd rulesets="codesize,unusedcode,naming,design">
+            <fileset dir="${basedir}">
                 <include name="**/*.php" />
+                <exclude name="**/tests/**" />
             </fileset>
-            <formatter type="xml" outfile="${application.builddir}/logs/pmd.xml"/>
+            <formatter type="xml" outfile="${basedir}/build/logs/pmd.xml"/>
         </phpmd>
     </target>
-
-   <target name="phpcs" description="Testa o padrÃ£o de codificaÃ§Ã£o">
-       <phpcodesniffer
-            standard="Symfony2"
-            showSniffs="true"
-            showWarnings="true">
-            <fileset dir="${application.library}">
-                <include name="**/*.php"/>
+ 
+    <target name="phpcs">
+        <phpcodesniffer standard="Zend" allowedFileExtensions="php">
+            <fileset dir="${basedir}">
+                <include name="**/*.php" />
+                <exclude name="**/tests/**" />
             </fileset>
-            <formatter type="default" usefile="false"/>
-            <formatter type="checkstyle" outfile="${application.builddir}/logs/checkstyle.xml"/>
+            <formatter type="default" usefile="false"  />
+            <formatter type="checkstyle" outfile="${basedir}/build/logs/checkstyle.xml" />
         </phpcodesniffer>
-   </target>
-
-    <target name="phpcpd" description="Testa duplicaÃ§Ã£o de cÃ³digo">
+    </target>
+ 
+    <target name="phpcpd">
         <phpcpd>
-            <fileset dir="${application.library}">
+            <fileset dir="${basedir}">
                 <include name="**/*.php" />
             </fileset>
-            <formatter type="pmd" outfile="${application.builddir}/logs/pmd-cpd.xml"/>
+            <formatter type="pmd" outfile="${basedir}/build/logs/pmd-cpd.xml"/>
         </phpcpd>
     </target>
-
-    <target name="phpdoc" description="DocumentaÃ§Ã£o de API">
-        <phpdoc title="Leviathan API Documentation"
-            destdir="build/api"
-            sourcecode="false"
-            output="HTML:Smarty:PHP">
-            <fileset dir="${application.library}">
+ 
+    <target name="phpdoc" description="AutoGenerate php docs">
+        <phpdoc title="My API Docs"
+                sourcecode="yes"
+                destdir="${basedir}/build/api"
+                output="HTML:Smarty:PHP">
+            <fileset dir="${basedir}">
                 <include name="**/*.php" />
+                <exclude name="**/tests/**" />
             </fileset>
         </phpdoc>
     </target>
-
-    <target name="phpunit" description="Testes UnitÃ¡rios">
-        <php expression="ini_set('memory_limit', -1);"/>
-        <php expression="extension_loaded('xdebug');" returnProperty="xdebug"/>
-        <if><istrue value="${xdebug}"/><then>
-            <coverage-setup database="${application.builddir}/coverage/coverage.db">
-                <fileset dir="${application.tests}" id="tests">
-                    <include name="**/*Test.php"/>
-                </fileset>
-            </coverage-setup>
-            <phpunit codecoverage="true" bootstrap="${application.tests}/bootstrap.php">
-                <batchtest>
-                    <fileset dir="${application.tests}">
-                        <include name="**/*Test.php"/>
-                    </fileset>
-                </batchtest>
-                <formatter type="clover" todir="${application.builddir}/logs" outfile="clover.xml"/>
-                <formatter type="xml" todir="${application.builddir}/logs" outfile="junit.xml"/>
-            </phpunit>
-            <coverage-report outfile="${application.builddir}/coverage/coverage.xml">
-                <report todir="${application.builddir}/coverage"/>
-            </coverage-report>
-        </then><else>
-            <phpunit codecoverage="false" bootstrap="${application.tests}/bootstrap.php">
-                <batchtest>
-                    <fileset dir="${application.tests}">
-                        <include name="**/*Test.php"/>
-                    </fileset>
-                </batchtest>
-                <formatter type="clover" todir="${application.builddir}/logs" outfile="clover.xml"/>
-                <formatter type="xml" todir="${application.builddir}/logs" outfile="junit.xml"/>
-            </phpunit>
-        </else></if>
-        <phpunitreport infile="${application.tests}/phpunit.xml"
-            todir="${application.builddir}/logs"/>
+ 
+     <target name="phpunit" description="Run unit tests with PHPUnit">
+         <exec command="phpunit --configuration=${basedir}/tests/phpunit.xml
+        --log-junit ${basedir}/build/logs/junit.xml
+        --coverage-clover ${basedir}/build/logs/clover.xml
+        --coverage-html ${basedir}/build/coverage"/>
     </target>
-
-    <target name="phpcb" description="Cria a navegaÃ§Ã£o de cÃ³digo">
+ 
+    <target name="phpcb"
+            description="Aggregate tool output with PHP_CodeBrowser">
         <exec executable="phpcb">
             <arg value="--log" />
-            <arg path="${application.builddir}/logs" />
+            <arg path="${basedir}/build/logs" />
             <arg value="--source" />
-            <arg path="${application.library}" />
+            <arg path="${basedir}/application" />
+            <arg value="--source" />
+            <arg path="${basedir}/library" />
             <arg value="--output" />
-            <arg path="${application.builddir}/code-browser" />
+            <arg path="${basedir}/build/code-browser" />
         </exec>
     </target>
 </project>

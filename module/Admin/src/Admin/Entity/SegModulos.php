@@ -4,6 +4,7 @@ namespace Admin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Core\Entity\BaseEntity;
+use Core\Entity\BaseEntityInterface;
 
 /**
  * SegModulos
@@ -11,7 +12,7 @@ use Core\Entity\BaseEntity;
  * @ORM\Table(name="seg_modulos")
  * @ORM\Entity
  */
-class SegModulos extends BaseEntity
+class SegModulos extends BaseEntity implements EntityInterface
 {
     /**
      * @var integer
