@@ -14,7 +14,7 @@ class ModuloForm extends Form
         $this->setAttribute('method', 'post');
         $this->setAttribute('class','form-horizontal');
         $this->setAttribute('role','form');
-        $this->setAttribute('action', '/admin/modulos/save');
+        $this->setAttribute('action', '/admin/modulos/create');
 
         $mod_id = new Element\Hidden('modId');
 

@@ -4,17 +4,14 @@ namespace Admin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Core\Entity\BaseEntity;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
+
 /**
  * SegModulos
  *
  * @ORM\Table(name="seg_modulos")
  * @ORM\Entity
  */
-class SegModulos extends BaseEntity implements InputFilterAwareInterface
+class SegModulos extends BaseEntity
 {
     /**
      * @var integer
@@ -55,86 +52,9 @@ class SegModulos extends BaseEntity implements InputFilterAwareInterface
 
     public function exchangeArray($data)
     {
-        $this->modId = (isset($data['modId'])) ? $data['modId'] : null;
         $this->modNome = (isset($data['modNome'])) ? $data['modNome'] : null;
         $this->modDescricao = (isset($data['modDescricao'])) ? $data['modDescricao'] : null;
         $this->modIcone = (isset($data['modIcone'])) ? $data['modIcone'] : 'icon-cog';
         $this->modAtivo = (isset($data['modAtivo'])) ? $data['modAtivo'] : '0';
     }
-
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception("Not used");
-    }
-
-    public function getInputFilter()
-    {
-        if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
-
-            $factory = new InputFactory();
-
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'modNome',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 150,
-                        ),
-                    ),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'modDescricao',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 150,
-                        ),
-                    ),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'modIcone',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 45,
-                        ),
-                    ),
-                ),
-            )));
-
-            $this->inputFilter = $inputFilter;
-        }
-
-        return $this->inputFilter;
-    }
-
 }

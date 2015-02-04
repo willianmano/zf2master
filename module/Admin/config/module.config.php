@@ -11,7 +11,11 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Admin\Model\SegUsuariosModel' => 'Admin\Model\Factory\SegUsuariosModelFactory',
-            'Admin\Model\SegModulosModel' => 'Admin\Model\Factory\SegModulosModelFactory'
+            'Admin\Model\SegModulosModel' => 'Admin\Model\Factory\SegModulosModelFactory',
+        ),
+        'invokables' => array(
+            'Admin\Form\ModuloForm' => 'Admin\Form\ModuloForm',
+            'Admin\Form\Filter\ModuloFormFilter' => 'Admin\Form\Filter\ModuloFormFilter',
         )
     ),
     'doctrine' => array(

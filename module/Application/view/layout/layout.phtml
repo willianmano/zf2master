@@ -44,6 +44,12 @@
             </div>
         </nav>
         <div class="container">
+            <?php
+                $message = $this->flashMessage();
+
+                echo strlen($message) > 0 ? $message : '';
+            ?>
+
             <?php echo $this->content; ?>
             <hr>
             <footer>

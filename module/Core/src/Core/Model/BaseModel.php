@@ -28,10 +28,40 @@ abstract class BaseModel
 
     public function find($id)
     {
-        return $this->repository->find($id);
+        return $this->repository->find((int)$id);
     }
 
     public function save($data)
+    {
+        try {
+            $entity = $data;
+
+            if (!$data instanceof $this->entity && is_object($data)) {
+                throw new \Exception("You only can pass an Array or an instance of {$this->entity}");
+            }
+
+            if (!$data instanceof $this->entity) {
+                $entity = new $this->entity;
+                $entity->exchangeArray($data);
+            }
+
+            $this->entityManager->transactional(function ($em) use ($entity) {
+                $em->persist($entity);
+            });
+        } catch (\Exception $e) {
+            $env = getenv('APPLICATION_ENV') ?: 'production';
+
+            if ($env == 'development') {
+                throw $e;
+            }
+
+            throw new \Exception("An error occurred while save the object. Please, report it to the technical support");
+        }
+
+        return $entity;
+    }
+
+    public function update($data)
     {
         try {
             $entity = $data;
