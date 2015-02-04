@@ -1,0 +1,9 @@
+{% extends 'layout/layout.twig' %}
+
+{% block content %}
+    {% for modulo in modulos|to_array %}
+        <p>{{ modulo.modNome }}</p>
+    {% else %}
+        <p>Nenhum modulo foi cadastrado ainda</p>
+    {% endfor %}
+{% endblock content %}

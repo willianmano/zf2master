@@ -10,6 +10,7 @@ return array(
         'Application',
         'Admin',
         'Core',
+        'ZfcTwig',
         'DoctrineModule',
         'DoctrineORMModule',
         'ZendDeveloperTools',

@@ -4,7 +4,7 @@ namespace Admin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Core\Entity\BaseEntity;
-use Core\Entity\BaseEntityInterface;
+use Core\Entity\EntityInterface;
 
 /**
  * SegModulos
