@@ -5,17 +5,24 @@ namespace Admin;
 return array(
     'controllers' => array(
         'factories' => array(
+            'Admin\Controller\Auth' => 'Admin\Controller\Factory\AuthControllerFactory',
             'Admin\Controller\Modulos' => 'Admin\Controller\Factory\ModulosControllerFactory',
             'Admin\Controller\CategoriasRecursos' => 'Admin\Controller\Factory\CategoriasRecursosControllerFactory'
         )
     ),
     'service_manager' => array(
         'factories' => array(
+            'Admin\Service\AuthService' => 'Admin\Service\Factory\AuthServiceFactory',
+            'Admin\Service\AuthorizationService' => 'Admin\Service\Factory\AuthorizationServiceFactory',
             'Admin\Model\SegUsuariosModel' => 'Admin\Model\Factory\SegUsuariosModelFactory',
             'Admin\Model\SegModulosModel' => 'Admin\Model\Factory\SegModulosModelFactory',
             'Admin\Model\SegCategoriasRecursosModel' => 'Admin\Model\Factory\SegCategoriasRecursosModelFactory',
+            'Session' => function ($serviceManager) {
+                return new \Zend\Session\Container('zf2master');
+            },
         ),
         'invokables' => array(
+            'Admin\Form\LoginForm' => 'Admin\Form\LoginForm',
             'Admin\Form\ModuloForm' => 'Admin\Form\ModuloForm',
             'Admin\Form\Filter\ModuloFormFilter' => 'Admin\Form\Filter\ModuloFormFilter',
         )
@@ -71,6 +78,35 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             'admin' => __DIR__ . '/../view',
+        ),
+    ),
+    'access_control' => array(
+        'preloginopenactions' => array(
+            'admin' => array(
+                'auth' => array(
+                    'index',
+                    'login',
+                    'logout'
+                )
+            )
+        ),
+        'postloginopenactions' => array(
+            'admin' => array(
+                'index' => array(
+                    'test',
+                    'index'
+                ),
+                'perfil' => array(
+                    'index',
+                    'update',
+                    'atualizarsenha'
+                ),
+            ),
+            'application' => array(
+                'index' => array(
+                    'index'
+                )
+            )
         ),
     ),
 );

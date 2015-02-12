@@ -4,6 +4,7 @@ namespace Admin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Core\Entity\BaseEntity;
+use Core\Entity\EntityInterface;
 
 /**
  * SegUsuarios
@@ -11,7 +12,7 @@ use Core\Entity\BaseEntity;
  * @ORM\Table(name="seg_usuarios")
  * @ORM\Entity
  */
-class SegUsuarios extends BaseEntity
+class SegUsuarios extends BaseEntity implements EntityInterface
 {
     /**
      * @var integer
@@ -70,6 +71,11 @@ class SegUsuarios extends BaseEntity
      * @ORM\ManyToMany(targetEntity="Admin\Entity\SegPerfis", mappedBy="pruUsr")
      */
     private $pruPrf;
+
+    public static function getIdentifier()
+    {
+        return 'usrId';
+    }
 
     /**
      * Populate the object from an array.

@@ -17,6 +17,7 @@ return array(
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
                         'action'     => 'index',
+                        'module'     => 'application',
                     ),
                 ),
             ),
@@ -32,6 +33,7 @@ return array(
                         '__NAMESPACE__' => 'Application\Controller',
                         'controller'    => 'Index',
                         'action'        => 'index',
+                        'module'        => 'application'
                     ),
                 ),
                 'may_terminate' => true,
