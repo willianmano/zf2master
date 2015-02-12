@@ -104,7 +104,8 @@ return array(
             ),
             'application' => array(
                 'index' => array(
-                    'index'
+                    'index',
+                    'test'
                 )
             )
         ),

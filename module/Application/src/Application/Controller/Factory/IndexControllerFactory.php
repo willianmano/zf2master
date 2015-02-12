@@ -14,7 +14,6 @@ class IndexControllerFactory implements FactoryInterface {
         $services = $serviceLocator->getServiceLocator()->get('ServiceManager');
 
         $controller = new IndexController();
-        $controller->setUsuarios($services->get('Admin\Model\SegUsuariosModel'));
 
         return $controller;
     }
