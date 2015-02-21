@@ -39,6 +39,20 @@ class CategoriaRecursoForm extends Form
             ->setLabel('Ícone')
             ->setLabelAttributes(array('class'=>'col-sm-3 control-label'));
 
+        $ctrOrdem = new Element\Text('ctrOrdem');
+        $ctrOrdem->setName('ctrOrdem')
+            ->setAttribute('placeholder', 'Ordem')
+            ->setAttribute('class', 'form-control')
+            ->setLabel('Ordem')
+            ->setLabelAttributes(array('class'=>'col-sm-3 control-label'));
+
+        $ctrVisivel = new Element\Text('ctrVisivel');
+        $ctrVisivel->setName('ctrVisivel')
+            ->setAttribute('placeholder', 'Visível')
+            ->setAttribute('class', 'form-control')
+            ->setLabel('Visível')
+            ->setLabelAttributes(array('class'=>'col-sm-3 control-label'));
+
         $submit = new Element\Submit('submit');
         $submit->setAttribute('value', 'Salvar')
             ->setAttribute('class', 'btn btn-info');
@@ -47,6 +61,8 @@ class CategoriaRecursoForm extends Form
             ->add($ctrNome)
             ->add($ctrDescricao)
             ->add($ctrIcone)
+            ->add($ctrOrdem)
+            ->add($ctrVisivel)
             ->add($submit);
     }
 }

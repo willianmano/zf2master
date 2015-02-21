@@ -2,7 +2,6 @@
 
 namespace Admin\Controller\Factory;
 
-use Core\Controller\CrudController;
 use Admin\Controller\CategoriasRecursosController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -15,6 +14,8 @@ class CategoriasRecursosControllerFactory implements FactoryInterface
 
         $controller = new CategoriasRecursosController();
         $controller->setModel($services->get('Admin\Model\SegCategoriasRecursosModel'));
+        $controller->setForm($services->get('Admin\Form\CategoriaRecursoForm'));
+        $controller->setFormFilter($services->get('Admin\Form\Filter\CategoriaRecursoFormFilter'));
 
         return $controller;
     }

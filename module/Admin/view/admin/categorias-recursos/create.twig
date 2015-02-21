@@ -1,0 +1,15 @@
+{% extends 'layout/layout_admin.twig' %}
+
+{% block content %}
+    <h3>Nova categoria de recurso</h3>
+
+    {{ form().openTag(form)|raw }}
+    {{ elementToRow(form.get('ctrNome')) }}
+    {{ elementToRow(form.get('ctrDescricao')) }}
+    {{ elementToRow(form.get('ctrIcone')) }}
+    {{ elementToRow(form.get('ctrOrdem')) }}
+    {{ elementToRow(form.get('ctrVisivel')) }}
+    {{ formSubmit(form.get('submit')) }}
+
+    {{ form().closeTag(form)|raw }}
+{% endblock content %}

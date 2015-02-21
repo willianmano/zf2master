@@ -13,7 +13,7 @@ class ModulosControllerFactory implements FactoryInterface
         $services = $serviceLocator->getServiceLocator()->get('ServiceManager');
 
         $controller = new ModulosController();
-        $controller->setModulos($services->get('Admin\Model\SegModulosModel'));
+        $controller->setModel($services->get('Admin\Model\SegModulosModel'));
         $controller->setForm($services->get('Admin\Form\ModuloForm'));
         $controller->setFormFilter($services->get('Admin\Form\Filter\ModuloFormFilter'));
 

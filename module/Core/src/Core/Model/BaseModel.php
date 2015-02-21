@@ -137,7 +137,7 @@ abstract class BaseModel
     {
         $data = $this->findAll();
 
-        $returnObject = array();
+        $returnObject[] = '';
         foreach ($data as $key => $value) {
             $returnObject[$value->$attributeId] = $value->$attributeLabel;
         }
@@ -147,7 +147,7 @@ abstract class BaseModel
     public function getAllItensToSelectByAttributesJsonReturn(Array $attributes, $attributeId, $attributeLabel) {
         $data = $this->getByAttributes($attributes);
 
-        $returnObject = array();
+        $returnObject[] = '';
         foreach ($data as $key => $value) {
             $returnObject[] = array($attributeId => $value->$attributeId,  $attributeLabel => $value->$attributeLabel);
         }

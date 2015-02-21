@@ -10,7 +10,7 @@ use Zend\View\Model\ViewModel;
 
 class ModulosController extends AbstractActionController
 {
-    protected $modulos;
+    protected $model;
     protected $form;
     protected $formFilter;
 
@@ -18,7 +18,7 @@ class ModulosController extends AbstractActionController
     {
         return new ViewModel(
             array(
-                'modulos' => $this->modulos->findAll()
+                'modulos' => $this->model->findAll()
             )
         );
     }
@@ -35,7 +35,7 @@ class ModulosController extends AbstractActionController
 
             if($this->form->isValid())
             {
-                $this->modulos->save($data);
+                $this->model->save($data);
 
                 $this->flashMessenger()->setNamespace('success')->addMessage('Módulo cadastrado com sucesso!');
 
@@ -54,7 +54,7 @@ class ModulosController extends AbstractActionController
 
         // Se existir o ID exibe o form preenchido para atualizacao
         if($id) {
-            $modulo = $this->modulos->find($id);
+            $modulo = $this->model->find($id);
 
             if(!$modulo) {
 
@@ -78,11 +78,11 @@ class ModulosController extends AbstractActionController
 
             if($this->form->isValid($data))
             {
-                $modulo = $this->modulos->find($data['modId']);
+                $modulo = $this->model->find($data['modId']);
 
                 $modulo->exchangeArray($data);
 
-                $this->modulos->save($modulo);
+                $this->model->save($modulo);
 
                 $this->flashMessenger()->setNamespace('success')->addMessage('Módulo atualizado com sucesso!');
 
@@ -105,7 +105,7 @@ class ModulosController extends AbstractActionController
         $id = (int) $this->params()->fromRoute('id');
 
         if($id) {
-            $modulo = $this->modulos->find($id);
+            $modulo = $this->model->find($id);
 
             if(!$modulo) {
                 $this->flashMessenger()->setNamespace('error')->addMessage('Módulo não existe!');
@@ -113,7 +113,7 @@ class ModulosController extends AbstractActionController
                 return $this->redirect()->toUrl('/admin/modulos');
             }
 
-            $this->modulos->delete($modulo);
+            $this->model->delete($modulo);
 
             $this->flashMessenger()->setNamespace('success')->addMessage('Módulo excluído com sucesso!');
         }
@@ -124,9 +124,9 @@ class ModulosController extends AbstractActionController
     /**
      * @param SegModulosModel $modulos
      */
-    public function setModulos(SegModulosModel $modulos)
+    public function setModel(SegModulosModel $model)
     {
-        $this->modulos = $modulos;
+        $this->model = $model;
     }
 
     /**

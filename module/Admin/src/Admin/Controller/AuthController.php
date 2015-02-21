@@ -28,7 +28,6 @@ class AuthController extends AbstractActionController
             return $this->redirect()->toUrl('/admin/auth');
         }
 
-
         $data = $request->getPost();
         $service = $this->serviceManager->get('Admin\Service\AuthService');
 
@@ -50,8 +49,8 @@ class AuthController extends AbstractActionController
 
     public function logoutAction()
     {
-        $service = $this->serviceManager->get('Admin\Service\AuthService');
-        $auth = $service->logout();
+        $authService = $this->serviceManager->get('Admin\Service\AuthService');
+        $authService->logout();
 
         return $this->redirect()->toUrl('/');
     }

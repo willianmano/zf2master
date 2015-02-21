@@ -8,23 +8,29 @@ return array(
             'Admin\Controller\Auth' => 'Admin\Controller\Factory\AuthControllerFactory',
             'Admin\Controller\Modulos' => 'Admin\Controller\Factory\ModulosControllerFactory',
             'Admin\Controller\CategoriasRecursos' => 'Admin\Controller\Factory\CategoriasRecursosControllerFactory'
+        ),
+        'invokables' => array(
+            'Admin\Controller\Index' => 'Admin\Controller\IndexController'
         )
     ),
     'service_manager' => array(
         'factories' => array(
+            'Session' => function ($serviceManager) {
+                return new \Zend\Session\Container('zf2master');
+            },
             'Admin\Service\AuthService' => 'Admin\Service\Factory\AuthServiceFactory',
             'Admin\Service\AuthorizationService' => 'Admin\Service\Factory\AuthorizationServiceFactory',
             'Admin\Model\SegUsuariosModel' => 'Admin\Model\Factory\SegUsuariosModelFactory',
             'Admin\Model\SegModulosModel' => 'Admin\Model\Factory\SegModulosModelFactory',
             'Admin\Model\SegCategoriasRecursosModel' => 'Admin\Model\Factory\SegCategoriasRecursosModelFactory',
-            'Session' => function ($serviceManager) {
-                return new \Zend\Session\Container('zf2master');
-            },
         ),
         'invokables' => array(
             'Admin\Form\LoginForm' => 'Admin\Form\LoginForm',
             'Admin\Form\ModuloForm' => 'Admin\Form\ModuloForm',
+            'Admin\Form\CategoriaRecursoForm' => 'Admin\Form\CategoriaRecursoForm',
+            //
             'Admin\Form\Filter\ModuloFormFilter' => 'Admin\Form\Filter\ModuloFormFilter',
+            'Admin\Form\Filter\CategoriaRecursoFormFilter' => 'Admin\Form\Filter\CategoriaRecursoFormFilter',
         )
     ),
     'doctrine' => array(
