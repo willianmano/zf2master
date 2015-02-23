@@ -48,10 +48,14 @@ class CategoriaRecursoForm extends Form
 
         $ctrVisivel = new Element\Select('ctrVisivel');
         $ctrVisivel->setName('ctrVisivel')
-            ->setAttribute('placeholder', 'Visível')
             ->setAttribute('class', 'form-control')
             ->setLabel('Visível')
-            ->setLabelAttributes(array('class'=>'col-sm-3 control-label'));
+            ->setLabelAttributes(array('class'=>'col-sm-3 control-label'))
+            ->setValueOptions(array(
+                '' => '',
+                '0' => 'Não',
+                '1' => 'Sim'
+            ));
 
         $submit = new Element\Submit('submit');
         $submit->setAttribute('value', 'Salvar')

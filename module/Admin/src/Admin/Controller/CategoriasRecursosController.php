@@ -103,20 +103,20 @@ class CategoriasRecursosController extends AbstractActionController
         $id = (int) $this->params()->fromRoute('id');
 
         if($id) {
-            $categoria = $this->model->find($id);
+            $categoriaR = $this->model->find($id);
 
-            if(!$categoria) {
-                $this->flashMessenger()->setNamespace('error')->addMessage('Categoria não existe!');
+            if(!$categoriaR) {
+                $this->flashMessenger()->setNamespace('error')->addMessage('Módulo não existe!');
 
-                return $this->redirect()->toUrl('/admin/categoriasrecursos');
+                return $this->redirect()->toUrl('/admin/modulos');
             }
 
-            $this->model->delete($categoria);
+            $this->model->delete($categoriaR);
 
-            $this->flashMessenger()->setNamespace('success')->addMessage('Categoria excluído com sucesso!');
+            $this->flashMessenger()->setNamespace('success')->addMessage('Módulo excluído com sucesso!');
         }
 
-        return $this->redirect()->toUrl('/admin/categoriasrecursos');
+        return $this->redirect()->toUrl('/admin/modulos');
     }
 
     /**
