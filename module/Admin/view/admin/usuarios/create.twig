@@ -1,0 +1,16 @@
+{% extends 'layout/layout_admin.twig' %}
+
+{% block content %}
+    <h3>Novo usuário</h3>
+
+    {{ form().openTag(form)|raw }}
+    {{ elementToRow(form.get('usrNome')) }}
+    {{ elementToRow(form.get('usrEmail')) }}
+    {{ elementToRow(form.get('usrTelefone')) }}
+    {{ elementToRow(form.get('usrUsuario')) }}
+    {{ elementToRow(form.get('usrSenha')) }}
+    {{ elementToRow(form.get('usrAtivo')) }}
+    {{ formSubmit(form.get('submit')) }}
+
+    {{ form().closeTag(form)|raw }}
+{% endblock content %}

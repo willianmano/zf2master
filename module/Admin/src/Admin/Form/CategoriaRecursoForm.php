@@ -11,6 +11,9 @@ class CategoriaRecursoForm extends Form
     {
         parent::__construct('novaCategoriaRecurso');
 
+        // solucao do problema do campo do tipo select
+        $this->setUseInputFilterDefaults(false);
+
         $this->setAttribute('method', 'post');
         $this->setAttribute('class','form-horizontal');
         $this->setAttribute('role','form');

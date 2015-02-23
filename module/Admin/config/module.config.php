@@ -7,7 +7,8 @@ return array(
         'factories' => array(
             'Admin\Controller\Auth' => 'Admin\Controller\Factory\AuthControllerFactory',
             'Admin\Controller\Modulos' => 'Admin\Controller\Factory\ModulosControllerFactory',
-            'Admin\Controller\CategoriasRecursos' => 'Admin\Controller\Factory\CategoriasRecursosControllerFactory'
+            'Admin\Controller\CategoriasRecursos' => 'Admin\Controller\Factory\CategoriasRecursosControllerFactory',
+            'Admin\Controller\Usuarios' => 'Admin\Controller\Factory\UsuariosControllerFactory',
         ),
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController'
@@ -28,9 +29,11 @@ return array(
             'Admin\Form\LoginForm' => 'Admin\Form\LoginForm',
             'Admin\Form\ModuloForm' => 'Admin\Form\ModuloForm',
             'Admin\Form\CategoriaRecursoForm' => 'Admin\Form\CategoriaRecursoForm',
+            'Admin\Form\UsuarioForm' => 'Admin\Form\UsuarioForm',
             //
             'Admin\Form\Filter\ModuloFormFilter' => 'Admin\Form\Filter\ModuloFormFilter',
             'Admin\Form\Filter\CategoriaRecursoFormFilter' => 'Admin\Form\Filter\CategoriaRecursoFormFilter',
+            'Admin\Form\Filter\UsuarioFormFilter' => 'Admin\Form\Filter\UsuarioFormFilter',
         )
     ),
     'doctrine' => array(
