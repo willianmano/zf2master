@@ -21,39 +21,51 @@ class SegCategoriasRecursos extends BaseEntity implements EntityInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $ctrId;
+    protected $ctrId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ctr_nome", type="string", length=45, nullable=false)
      */
-    private $ctrNome;
+    protected $ctrNome;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ctr_descricao", type="string", length=300, nullable=true)
      */
-    private $ctrDescricao;
+    protected $ctrDescricao;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ctr_icone", type="string", length=45, nullable=false)
      */
-    private $ctrIcone = 'icon-bookmark';
+    protected $ctrIcone = 'icon-bookmark';
 
-    public static function getIdentifier()
-    {
-        return 'ctrId';
-    }
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ctr_ordem", type="integer", nullable=false)
+     */
+    protected $ctrOrdem = 10;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="ctr_visivel", type="boolean", nullable=false)
+     */
+    protected $ctrVisivel = '0';
 
     public function exchangeArray($data)
     {
+        $this->ctrId = (isset($data['ctrId'])) ? $data['ctrId'] : null;
         $this->ctrNome = (isset($data['ctrNome'])) ? $data['ctrNome'] : null;
         $this->ctrDescricao = (isset($data['ctrDescricao'])) ? $data['ctrDescricao'] : null;
         $this->ctrIcone = (isset($data['ctrIcone'])) ? $data['ctrIcone'] : 'icon-bookmark';
+        $this->ctrOrdem = (isset($data['ctrOrdem'])) ? $data['ctrOrdem'] : 10;
+        $this->ctrVisivel = (isset($data['ctrVisivel'])) ? $data['ctrVisivel'] : '0';
     }
 
 }

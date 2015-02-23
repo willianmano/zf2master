@@ -46,7 +46,7 @@ class CategoriaRecursoForm extends Form
             ->setLabel('Ordem')
             ->setLabelAttributes(array('class'=>'col-sm-3 control-label'));
 
-        $ctrVisivel = new Element\Text('ctrVisivel');
+        $ctrVisivel = new Element\Select('ctrVisivel');
         $ctrVisivel->setName('ctrVisivel')
             ->setAttribute('placeholder', 'Visível')
             ->setAttribute('class', 'form-control')

@@ -36,8 +36,6 @@ class CategoriaRecursoFormFilter extends InputFilter
         $ctrVisivel = new Input('ctrVisivel');
         $ctrVisivel->getFilterChain()
             ->attachByName('Boolean');
-        $ctrVisivel->getValidatorChain()
-            ->attachByName('NotEmpty');
 
         $this->add($ctrNome)
             ->add($ctrIcone)

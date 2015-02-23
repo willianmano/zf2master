@@ -4,6 +4,7 @@ namespace Admin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Core\Entity\BaseEntity;
+use Core\Entity\EntityInterface;
 
 /**
  * SegPermissoes
@@ -11,7 +12,7 @@ use Core\Entity\BaseEntity;
  * @ORM\Table(name="seg_permissoes", indexes={@ORM\Index(name="fk_seg_permissoes_seg_recursos1", columns={"prm_rcs_id"})})
  * @ORM\Entity
  */
-class SegPermissoes extends BaseEntity
+class SegPermissoes extends BaseEntity implements EntityInterface
 {
     /**
      * @var integer
@@ -20,21 +21,21 @@ class SegPermissoes extends BaseEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $prmId;
+    protected $prmId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="prm_nome", type="string", length=45, nullable=false)
      */
-    private $prmNome;
+    protected $prmNome;
 
     /**
      * @var string
      *
      * @ORM\Column(name="prm_descricao", type="string", length=300, nullable=true)
      */
-    private $prmDescricao;
+    protected $prmDescricao;
 
     /**
      * @var \Admin\Entity\SegRecursos
@@ -44,14 +45,14 @@ class SegPermissoes extends BaseEntity
      *   @ORM\JoinColumn(name="prm_rcs_id", referencedColumnName="rcs_id")
      * })
      */
-    private $prmRcs;
+    protected $prmRcs;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Admin\Entity\SegPerfis", mappedBy="prpPrm")
      */
-    private $prpPrf;
+    protected $prpPrf;
 
     /**
      * Constructor
@@ -59,6 +60,13 @@ class SegPermissoes extends BaseEntity
     public function __construct()
     {
         $this->prpPrf = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function exchangeArray($data)
+    {
+        $this->prmId = (isset($data['prmId'])) ? $data['prmId'] : null;
+        $this->prmNome = (isset($data['prmNome'])) ? $data['prmNome'] : null;
+        $this->prmDescricao = (isset($data['prmDescricao'])) ? $data['prmDescricao'] : null;
     }
 
 }

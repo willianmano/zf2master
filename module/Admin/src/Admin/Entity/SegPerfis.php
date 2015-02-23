@@ -4,6 +4,7 @@ namespace Admin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Core\Entity\BaseEntity;
+use Core\Entity\EntityInterface;
 
 /**
  * SegPerfis
@@ -11,7 +12,7 @@ use Core\Entity\BaseEntity;
  * @ORM\Table(name="seg_perfis", indexes={@ORM\Index(name="fk_seg_perfis_seg_modulos1", columns={"prf_mod_id"})})
  * @ORM\Entity
  */
-class SegPerfis extends BaseEntity
+class SegPerfis extends BaseEntity implements EntityInterface
 {
     /**
      * @var integer
@@ -20,21 +21,21 @@ class SegPerfis extends BaseEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $prfId;
+    protected $prfId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="prf_nome", type="string", length=150, nullable=false)
      */
-    private $prfNome;
+    protected $prfNome;
 
     /**
      * @var string
      *
      * @ORM\Column(name="prf_descricao", type="string", length=300, nullable=true)
      */
-    private $prfDescricao;
+    protected $prfDescricao;
 
     /**
      * @var \Admin\Entity\SegModulos
@@ -44,7 +45,7 @@ class SegPerfis extends BaseEntity
      *   @ORM\JoinColumn(name="prf_mod_id", referencedColumnName="mod_id")
      * })
      */
-    private $prfMod;
+    protected $prfMod;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -59,7 +60,7 @@ class SegPerfis extends BaseEntity
      *   }
      * )
      */
-    private $prpPrm;
+    protected $prpPrm;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -74,7 +75,7 @@ class SegPerfis extends BaseEntity
      *   }
      * )
      */
-    private $pruUsr;
+    protected $pruUsr;
 
     /**
      * Constructor
@@ -83,6 +84,13 @@ class SegPerfis extends BaseEntity
     {
         $this->prpPrm = new \Doctrine\Common\Collections\ArrayCollection();
         $this->pruUsr = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function exchangeArray($data)
+    {
+        $this->prfId = (isset($data['prfId'])) ? $data['prfId'] : null;
+        $this->prfNome = (isset($data['prfNome'])) ? $data['prfNome'] : null;
+        $this->prfDescricao = (isset($data['prfDescricao'])) ? $data['prfDescricao'] : null;
     }
 
 }

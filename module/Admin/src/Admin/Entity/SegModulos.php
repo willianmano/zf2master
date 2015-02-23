@@ -21,43 +21,39 @@ class SegModulos extends BaseEntity implements EntityInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $modId;
+    protected $modId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="mod_nome", type="string", length=150, nullable=false)
      */
-    private $modNome;
+    protected $modNome;
 
     /**
      * @var string
      *
      * @ORM\Column(name="mod_descricao", type="string", length=300, nullable=true)
      */
-    private $modDescricao;
+    protected $modDescricao;
 
     /**
      * @var string
      *
      * @ORM\Column(name="mod_icone", type="string", length=45, nullable=true)
      */
-    private $modIcone = 'icon-cog';
+    protected $modIcone = 'icon-cog';
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="mod_ativo", type="boolean", nullable=false)
      */
-    private $modAtivo = '0';
-
-    public static function getIdentifier()
-    {
-        return 'modId';
-    }
+    protected $modAtivo = '0';
 
     public function exchangeArray($data)
     {
+        $this->modId = (isset($data['modId'])) ? $data['modId'] : null;
         $this->modNome = (isset($data['modNome'])) ? $data['modNome'] : null;
         $this->modDescricao = (isset($data['modDescricao'])) ? $data['modDescricao'] : null;
         $this->modIcone = (isset($data['modIcone'])) ? $data['modIcone'] : 'icon-cog';

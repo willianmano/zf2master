@@ -21,60 +21,63 @@ class SegUsuarios extends BaseEntity implements EntityInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $usrId;
+    protected $usrId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="usr_nome", type="string", length=150, nullable=false)
      */
-    private $usrNome;
+    protected $usrNome;
 
     /**
      * @var string
      *
      * @ORM\Column(name="usr_email", type="string", length=150, nullable=false)
      */
-    private $usrEmail;
+    protected $usrEmail;
 
     /**
      * @var string
      *
      * @ORM\Column(name="usr_telefone", type="string", length=15, nullable=true)
      */
-    private $usrTelefone;
+    protected $usrTelefone;
 
     /**
      * @var string
      *
      * @ORM\Column(name="usr_usuario", type="string", length=45, nullable=false)
      */
-    private $usrUsuario;
+    protected $usrUsuario;
 
     /**
      * @var string
      *
      * @ORM\Column(name="usr_senha", type="string", length=100, nullable=false)
      */
-    private $usrSenha;
+    protected $usrSenha;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="usr_ativo", type="boolean", nullable=false)
      */
-    private $usrAtivo = '1';
+    protected $usrAtivo = '1';
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Admin\Entity\SegPerfis", mappedBy="pruUsr")
      */
-    private $pruPrf;
+    protected $pruPrf;
 
-    public static function getIdentifier()
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-        return 'usrId';
+        $this->pruPrf = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -91,13 +94,5 @@ class SegUsuarios extends BaseEntity implements EntityInterface
         $this->usrUsuario = (isset($data['usrUsuario'])) ? $data['usrUsuario'] : null;
         $this->usrSenha = (isset($data['usrSenha'])) ? $data['usrSenha'] : null;
         $this->usrAtivo = (isset($data['usrAtivo'])) ? $data['usrAtivo'] : '1';
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->pruPrf = new \Doctrine\Common\Collections\ArrayCollection();
     }
 }

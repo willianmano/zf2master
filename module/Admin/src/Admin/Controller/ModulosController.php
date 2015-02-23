@@ -18,7 +18,7 @@ class ModulosController extends AbstractActionController
     {
         return new ViewModel(
             array(
-                'modulos' => $this->model->findAll()
+                'resultSet' => $this->model->findAll()
             )
         );
     }
@@ -52,6 +52,8 @@ class ModulosController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id');
 
+        $this->form->setAttribute('action', '/admin/modulos/update');
+
         // Se existir o ID exibe o form preenchido para atualizacao
         if($id) {
             $modulo = $this->model->find($id);
@@ -63,7 +65,6 @@ class ModulosController extends AbstractActionController
                 return $this->redirect()->toUrl('/admin/modulos');
             }
 
-            $this->form->setAttribute('action', '/admin/modulos/update');
             $this->form->setData($modulo->getArrayCopy());
         }
 

@@ -13,10 +13,10 @@ abstract class BaseEntity
     public function __get($property)
     {
         if (property_exists($this, $property)) {
-            $reflection = new \ReflectionProperty($this, $property);
-            $reflection->setAccessible($property);
-            return $reflection->getValue($this);
+            return $this->$property;
         }
+
+        throw new \Exception("Property does not exists!");
     }
 
     /**
@@ -27,11 +27,7 @@ abstract class BaseEntity
      */
     public function __set($property, $value)
     {
-        if (property_exists($this, $property)) {
-            $reflection = new \ReflectionProperty($this, $property);
-            $reflection->setAccessible($property);
-            $reflection->setValue($this, $value);
-        }
+        $this->$property = $value;
     }
 
     /**
@@ -41,16 +37,6 @@ abstract class BaseEntity
      */
     public function getArrayCopy()
     {
-        $reflectionClass = new \ReflectionClass($this);
-        $attributes  = $reflectionClass->getProperties( \ReflectionProperty::IS_PRIVATE );
-
-        foreach ($attributes as $value) {
-            $reflection = new \ReflectionProperty($this, $value->name);
-            $reflection->setAccessible($value->name);
-
-            $returnData[$value->name] = $reflection->getValue($this);
-        }
-
-        return $returnData;
+        return get_object_vars($this);
     }
 }

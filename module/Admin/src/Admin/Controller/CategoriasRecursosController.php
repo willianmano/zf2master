@@ -45,6 +45,80 @@ class CategoriasRecursosController extends AbstractActionController
         );
     }
 
+    public function updateAction()
+    {
+        $id = (int) $this->params()->fromRoute('id');
+
+        $this->form->setAttribute('action', '/admin/categoriasrecursos/update');
+
+        // Se existir o ID exibe o form preenchido para atualizacao
+        if($id) {
+            $categoriaRecurso = $this->model->find($id);
+
+            if(!$categoriaRecurso) {
+
+                $this->flashMessenger()->setNamespace('error')->addMessage('Categoria não existe!');
+
+                return $this->redirect()->toUrl('/admin/categoriasrecursos');
+            }
+
+            $this->form->setData($categoriaRecurso->getArrayCopy());
+        }
+
+        // Se o metodo for post salva as informacoes com os dados preenchidos no form
+        if ($this->request->isPost())
+        {
+            $data = $this->params()->fromPost();
+            $this->form->setData($data);
+
+            $this->formFilter->prepareFilters();
+            $this->form->setInputFilter($this->formFilter);
+
+            if($this->form->isValid($data))
+            {
+                $categoriaRecurso = $this->model->find($data['ctrId']);
+
+                $categoriaRecurso->exchangeArray($data);
+
+                $this->model->save($categoriaRecurso);
+
+                $this->flashMessenger()->setNamespace('success')->addMessage('Categoria atualizada com sucesso!');
+
+                return $this->redirect()->toUrl('/admin/categoriasrecursos');
+            }
+        }
+
+        // Se nao existir ID nem for post eh um acesso ilegal e redireciona para a action principal do controller
+        if(!$id && !$this->request->isPost()) {
+            return $this->redirect()->toUrl('/admin/categoriasrecursos');
+        }
+
+        return new ViewModel(
+            array('form' => $this->form)
+        );
+    }
+
+    public function deleteAction()
+    {
+        $id = (int) $this->params()->fromRoute('id');
+
+        if($id) {
+            $categoria = $this->model->find($id);
+
+            if(!$categoria) {
+                $this->flashMessenger()->setNamespace('error')->addMessage('Categoria não existe!');
+
+                return $this->redirect()->toUrl('/admin/categoriasrecursos');
+            }
+
+            $this->model->delete($categoria);
+
+            $this->flashMessenger()->setNamespace('success')->addMessage('Categoria excluído com sucesso!');
+        }
+
+        return $this->redirect()->toUrl('/admin/categoriasrecursos');
+    }
+
     /**
      * @param mixed $model
      */

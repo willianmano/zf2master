@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for modulo in modulos|to_array %}
+            {% for modulo in resultSet|to_array %}
                 <tr>
                     <th scope="row">{{ modulo.modId }}</th>
                     <td>{{ modulo.modNome }}</td>

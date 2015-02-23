@@ -8,31 +8,25 @@ abstract class BaseModel
 {
     protected $entityManager, $repository, $entity;
 
-    public $entityPrimaryKey;
-
     public function __construct(EntityManager $em, $entity)
     {
-        $this->entityManager = $em;
-
         if( !class_exists($entity)) {
             throw new \Exception("The Class '{$entity}' was not found!");
         }
 
+        $this->entityManager = $em;
+
         $this->entity = $entity;
-
-        $this->repository = $this->entityManager->getRepository($entity);
-
-        $this->entityPrimaryKey = $entity::getIdentifier();
     }
 
     public function findAll()
     {
-        return $this->repository->findAll();
+        return $this->entityManager->getRepository($this->entity)->findAll();
     }
 
     public function find($id)
     {
-        return $this->repository->find((int)$id);
+        return $this->entityManager->getRepository($this->entity)->find((int)$id);
     }
 
     public function save($data)
@@ -124,12 +118,12 @@ abstract class BaseModel
     }
 
     /*
-   * Carrega os itens passando um campo e o valor
-   * Ex. array($attributes => $value)
-   */
+     * Carrega os itens passando um campo e o valor
+     * Ex. array($attributes => $value)
+    */
     public function getByAttributes(Array $array)
     {
-        return $this->repository->findBy($array);
+        return $this->entityManager->getRepository($this->entity)->findBy($array);
     }
 
     //Popula Select
@@ -144,7 +138,8 @@ abstract class BaseModel
 
         return $returnObject;
     }
-    public function getAllItensToSelectByAttributesJsonReturn(Array $attributes, $attributeId, $attributeLabel) {
+
+    public function getAllItensToSelectByAttributes(Array $attributes, $attributeId, $attributeLabel) {
         $data = $this->getByAttributes($attributes);
 
         $returnObject[] = '';
