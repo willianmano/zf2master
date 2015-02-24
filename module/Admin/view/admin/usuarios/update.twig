@@ -9,8 +9,10 @@
     {{ elementToRow(form.get('usrEmail')) }}
     {{ elementToRow(form.get('usrTelefone')) }}
     {{ elementToRow(form.get('usrUsuario')) }}
-    {{ elementToRow(form.get('usrSenha')) }}
     {{ elementToRow(form.get('usrAtivo')) }}
+
+    <hr>
+    {{ elementToRow(form.get('usrSenha')) }}
     {{ formSubmit(form.get('submit')) }}
 
     {{ form().closeTag(form)|raw }}

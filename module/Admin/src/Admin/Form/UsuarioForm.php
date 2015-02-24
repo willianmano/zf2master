@@ -52,7 +52,7 @@ class UsuarioForm extends Form
 
         $usrSenha = new Element\Password('usrSenha');
         $usrSenha->setName('usrSenha')
-            ->setAttribute('placeholder', 'Ordem')
+            ->setAttribute('placeholder', 'Senha')
             ->setAttribute('class', 'form-control')
             ->setLabel('Senha')
             ->setLabelAttributes(array('class'=>'col-sm-3 control-label'));

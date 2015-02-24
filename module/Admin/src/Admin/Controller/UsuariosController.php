@@ -7,6 +7,7 @@ use Admin\Form\UsuarioForm;
 use Admin\Form\Filter\UsuarioFormFilter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Crypt\Password\Bcrypt;
 
 class UsuariosController extends AbstractActionController
 {
@@ -35,6 +36,10 @@ class UsuariosController extends AbstractActionController
 
             if($this->form->isValid())
             {
+
+                $bcrypt = new Bcrypt();
+                $data['usrSenha'] = $bcrypt->create($data['usrSenha']);
+
                 $this->model->save($data);
 
                 $this->flashMessenger()->setNamespace('success')->addMessage('Usuário cadastrado com sucesso!');
@@ -56,16 +61,17 @@ class UsuariosController extends AbstractActionController
 
         // Se existir o ID exibe o form preenchido para atualizacao
         if($id) {
-            $modulo = $this->model->find($id);
+            $usuario = $this->model->find($id);
+            $usuario->usrSenha = '';
 
-            if(!$modulo) {
+            if(!$usuario) {
 
                 $this->flashMessenger()->setNamespace('error')->addMessage('Usuário não existe!');
 
                 return $this->redirect()->toUrl('/admin/usuarios');
             }
 
-            $this->form->setData($modulo->getArrayCopy());
+            $this->form->setData($usuario->getArrayCopy());
         }
 
         // Se o metodo for post salva as informacoes com os dados preenchidos no form
@@ -75,15 +81,29 @@ class UsuariosController extends AbstractActionController
             $this->form->setData($data);
 
             $this->formFilter->prepareFilters();
+
+            if(!$data['usrSenha']) {
+                $this->formFilter->remove('usrSenha');
+            }
+
             $this->form->setInputFilter($this->formFilter);
 
             if($this->form->isValid($data))
             {
-                $modulo = $this->model->find($data['modId']);
+                $usuario = $this->model->find($data['usrId']);
 
-                $modulo->exchangeArray($data);
+                $senhaAntiga = $usuario->usrSenha;
 
-                $this->model->save($modulo);
+                $usuario->exchangeArray($data);
+
+                if($data['usrSenha']) {
+                    $bcrypt = new Bcrypt();
+                    $usuario->usrSenha = $bcrypt->create($data['usrSenha']);
+                } else {
+                    $usuario->usrSenha = $senhaAntiga;
+                }
+
+                $this->model->save($usuario);
 
                 $this->flashMessenger()->setNamespace('success')->addMessage('Usuário atualizado com sucesso!');
 
@@ -106,15 +126,15 @@ class UsuariosController extends AbstractActionController
         $id = (int) $this->params()->fromRoute('id');
 
         if($id) {
-            $modulo = $this->model->find($id);
+            $usuario = $this->model->find($id);
 
-            if(!$modulo) {
+            if(!$usuario) {
                 $this->flashMessenger()->setNamespace('error')->addMessage('Usuário não existe!');
 
                 return $this->redirect()->toUrl('/admin/usuarios');
             }
 
-            $this->model->delete($modulo);
+            $this->model->delete($usuario);
 
             $this->flashMessenger()->setNamespace('success')->addMessage('Usuário excluído com sucesso!');
         }
@@ -123,7 +143,7 @@ class UsuariosController extends AbstractActionController
     }
 
     /**
-     * @param SegUsuariosModel $modulos
+     * @param SegUsuariosModel $usuarios
      */
     public function setModel(SegUsuariosModel $model)
     {
