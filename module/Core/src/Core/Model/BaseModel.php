@@ -131,7 +131,7 @@ abstract class BaseModel
     {
         $data = $this->findAll();
 
-        $returnObject[] = '';
+        $returnObject[] = null;
         foreach ($data as $key => $value) {
             $returnObject[$value->$attributeId] = $value->$attributeLabel;
         }
@@ -142,7 +142,7 @@ abstract class BaseModel
     public function getAllItensToSelectByAttributes(Array $attributes, $attributeId, $attributeLabel) {
         $data = $this->getByAttributes($attributes);
 
-        $returnObject[] = '';
+        $returnObject[] = null;
         foreach ($data as $key => $value) {
             $returnObject[] = array($attributeId => $value->$attributeId,  $attributeLabel => $value->$attributeLabel);
         }
