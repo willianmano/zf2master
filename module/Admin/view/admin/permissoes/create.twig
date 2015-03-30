@@ -1,0 +1,12 @@
+{% extends 'layout/layout_admin.twig' %}
+
+{% block content %}
+    <h3>Nova Permissão</h3>
+
+    {{ form().openTag(form)|raw }}
+    {{ elementToRow(form.get('prmNome')) }}
+    {{ elementToRow(form.get('prmDescricao')) }}
+    {{ formSubmit(form.get('submit')) }}
+
+    {{ form().closeTag(form)|raw }}
+{% endblock content %}

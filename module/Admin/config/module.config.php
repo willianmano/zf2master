@@ -9,6 +9,7 @@ return array(
             'Admin\Controller\Modulos' => 'Admin\Controller\Factory\ModulosControllerFactory',
             'Admin\Controller\CategoriasRecursos' => 'Admin\Controller\Factory\CategoriasRecursosControllerFactory',
             'Admin\Controller\Usuarios' => 'Admin\Controller\Factory\UsuariosControllerFactory',
+            'Admin\Controller\Permissoes' => 'Admin\Controller\Factory\PermissoesControllerFactory',
         ),
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController'
@@ -24,16 +25,19 @@ return array(
             'Admin\Model\SegUsuariosModel' => 'Admin\Model\Factory\SegUsuariosModelFactory',
             'Admin\Model\SegModulosModel' => 'Admin\Model\Factory\SegModulosModelFactory',
             'Admin\Model\SegCategoriasRecursosModel' => 'Admin\Model\Factory\SegCategoriasRecursosModelFactory',
+            'Admin\Model\SegPermissoesModel' => 'Admin\Model\Factory\SegPermissoesModelFactory',
         ),
         'invokables' => array(
             'Admin\Form\LoginForm' => 'Admin\Form\LoginForm',
             'Admin\Form\ModuloForm' => 'Admin\Form\ModuloForm',
             'Admin\Form\CategoriaRecursoForm' => 'Admin\Form\CategoriaRecursoForm',
             'Admin\Form\UsuarioForm' => 'Admin\Form\UsuarioForm',
+            'Admin\Form\PermissaoForm' => 'Admin\Form\PermissaoForm',
             //
             'Admin\Form\Filter\ModuloFormFilter' => 'Admin\Form\Filter\ModuloFormFilter',
             'Admin\Form\Filter\CategoriaRecursoFormFilter' => 'Admin\Form\Filter\CategoriaRecursoFormFilter',
             'Admin\Form\Filter\UsuarioFormFilter' => 'Admin\Form\Filter\UsuarioFormFilter',
+            'Admin\Form\Filter\PermissaoFormFilter' => 'Admin\Form\Filter\PermissaoFormFilter',
         )
     ),
     'doctrine' => array(
