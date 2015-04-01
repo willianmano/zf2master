@@ -4,9 +4,32 @@
     <h3>Nova Permissão</h3>
 
     {{ form().openTag(form)|raw }}
+    {{ elementToRow(form.get('prmModulo')) }}
+    {{ elementToRow(form.get('prmRcs')) }}
     {{ elementToRow(form.get('prmNome')) }}
     {{ elementToRow(form.get('prmDescricao')) }}
     {{ formSubmit(form.get('submit')) }}
 
     {{ form().closeTag(form)|raw }}
 {% endblock content %}
+
+
+{% block inline %}
+
+    <script type="text/javascript">
+        $("#prmModulo").change(function(e){
+            var recursos = $("#prmRcs");
+            var id = $("#prmModulo").val();
+
+            $.getJSON( "/admin/permissoes/asyncgetrecursosbymodulo/" + id, function( res ){
+                recursos.empty();
+                recursos.append("<option>Escolha um recurso</option>");
+
+                for(var i in res) {
+                    recursos.append("<option value='"+res[i]['rcsId']+"'>"+res[i]['rcsNome']+"</option>");
+                }
+            });
+        });
+    </script>
+
+{% endblock inline %}

@@ -45,6 +45,13 @@ class SegModulos extends BaseEntity implements EntityInterface
     protected $modIcone = 'icon-cog';
 
     /**
+     * @var \Admin\Entity\SegRecursos
+     *
+     * @ORM\OneToMany(targetEntity="Admin\Entity\SegRecursos", mappedBy="rcsMod")
+     */
+    protected $recursos;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="mod_ativo", type="boolean", nullable=false)

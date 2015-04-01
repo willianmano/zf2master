@@ -26,6 +26,7 @@ return array(
             'Admin\Model\SegModulosModel' => 'Admin\Model\Factory\SegModulosModelFactory',
             'Admin\Model\SegCategoriasRecursosModel' => 'Admin\Model\Factory\SegCategoriasRecursosModelFactory',
             'Admin\Model\SegPermissoesModel' => 'Admin\Model\Factory\SegPermissoesModelFactory',
+            'Admin\Model\SegRecursosModel' => 'Admin\Model\Factory\SegRecursosModelFactory',
         ),
         'invokables' => array(
             'Admin\Form\LoginForm' => 'Admin\Form\LoginForm',
@@ -91,6 +92,9 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             'admin' => __DIR__ . '/../view',
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
     'access_control' => array(

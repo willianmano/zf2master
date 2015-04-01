@@ -15,6 +15,8 @@ class PermissoesControllerFactory implements FactoryInterface
 
         $controller = new PermissoesController();
         $controller->setModel($services->get('Admin\Model\SegPermissoesModel'));
+        $controller->setModulosModel($services->get('Admin\Model\SegModulosModel'));
+        $controller->setRecursosModel($services->get('Admin\Model\SegRecursosModel'));
         $controller->setForm($services->get('Admin\Form\PermissaoForm'));
         $controller->setFormFilter($services->get('Admin\Form\Filter\PermissaoFormFilter'));
 

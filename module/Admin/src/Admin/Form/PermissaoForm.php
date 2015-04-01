@@ -11,6 +11,9 @@ class PermissaoForm extends Form
     {
         parent::__construct('novaPermissao');
 
+        // solucao do problema do campo do tipo select
+        $this->setUseInputFilterDefaults(false);
+
         $this->setAttribute('method', 'post');
         $this->setAttribute('class','form-horizontal');
         $this->setAttribute('role','form');
@@ -21,14 +24,16 @@ class PermissaoForm extends Form
         $prmModulo = new Element\Select('prmModulo');
         $prmModulo->setName('prmModulo')
             ->setAttribute('placeholder', 'Módulo do recurso')
+            ->setAttribute('class', 'form-control')
             ->setAttribute('id', 'prmModulo')
             ->setLabel('Módulo do recurso')
-            ->setLabelAttributes(array('class'=>'control-label'))
+            ->setLabelAttributes(array('class'=>'col-sm-3 control-label'))
             ->setEmptyOption('Escolha um módulo');
 
         $prmRcs = new Element\Select('prmRcs');
         $prmRcs->setName('prmRcs')
             ->setAttribute('placeholder', 'Recurso da permissão')
+            ->setAttribute('class', 'form-control')
             ->setAttribute('id', 'prmRcs')
             ->setLabel('Recurso da Permissão')
             ->setLabelAttributes(array('class'=>'col-sm-3 control-label'))

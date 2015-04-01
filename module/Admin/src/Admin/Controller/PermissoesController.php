@@ -3,9 +3,12 @@
 namespace Admin\Controller;
 
 use Admin\Model\SegPermissoesModel;
+use Admin\Model\SegModulosModel;
+use Admin\Model\SegRecursosModel;
 use Admin\Form\PermissaoForm;
 use Admin\Form\Filter\PermissaoFormFilter;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 class PermissoesController extends AbstractActionController
@@ -13,6 +16,9 @@ class PermissoesController extends AbstractActionController
     protected $model;
     protected $form;
     protected $formFilter;
+
+    protected $modulosModel;
+    protected $recursosModel;
 
     public function indexAction()
     {
@@ -35,13 +41,27 @@ class PermissoesController extends AbstractActionController
 
             if($this->form->isValid())
             {
+                $data['prmRcs'] = $this->recursosModel->find($data['prmRcs']);
                 $this->model->save($data);
 
-                $this->flashMessenger()->setNamespace('success')->addMessage('Permissão cadastrado com sucesso!');
+                $this->flashMessenger()->setNamespace('success')->addMessage('Permissão cadastrada com sucesso!');
 
                 return $this->redirect()->toUrl('/admin/permissoes');
             }
+
+            if($modulo = $this->modulosModel->find($data['prmModulo'])) {
+                if(count($modulo->recursos)) {
+                    foreach ($modulo->recursos as $recurso) {
+                        $recursos[$recurso->rcsId] = $recurso->rcsNome;
+                    }
+                    //popula o select com os modulos
+                    $this->form->get('prmRcs')->setValueOptions($recursos);
+                }
+            }
         }
+
+        //popula o select com os modulos
+        $this->form->get('prmModulo')->setValueOptions($this->modulosModel->getAllItensToSelect('modId', 'modNome'));
 
         return new ViewModel(
             array('form' => $this->form)
@@ -56,16 +76,19 @@ class PermissoesController extends AbstractActionController
 
         // Se existir o ID exibe o form preenchido para atualizacao
         if($id) {
-            $modulo = $this->model->find($id);
+            $permissao = $this->model->find($id);
 
-            if(!$modulo) {
+            if(!$permissao) {
 
                 $this->flashMessenger()->setNamespace('error')->addMessage('Permissão não existe!');
 
                 return $this->redirect()->toUrl('/admin/permissoes');
             }
 
-            $this->form->setData($modulo->getArrayCopy());
+            //popula o select com os modulos
+            $this->form->get('prmModulo')->setValueOptions($this->modulosModel->getAllItensToSelect('modId', 'modNome'));
+
+            $this->form->setData($permissao->getArrayCopy());
         }
 
         // Se o metodo for post salva as informacoes com os dados preenchidos no form
@@ -79,13 +102,13 @@ class PermissoesController extends AbstractActionController
 
             if($this->form->isValid($data))
             {
-                $modulo = $this->model->find($data['prmId']);
+                $permissao = $this->model->find($data['prmId']);
 
-                $modulo->exchangeArray($data);
+                $permissao->exchangeArray($data);
 
-                $this->model->save($modulo);
+                $this->model->save($permissao);
 
-                $this->flashMessenger()->setNamespace('success')->addMessage('Permissão atualizado com sucesso!');
+                $this->flashMessenger()->setNamespace('success')->addMessage('Permissão atualizada com sucesso!');
 
                 return $this->redirect()->toUrl('/admin/permissoes');
             }
@@ -106,30 +129,44 @@ class PermissoesController extends AbstractActionController
         $id = (int) $this->params()->fromRoute('id');
 
         if($id) {
-            $modulo = $this->model->find($id);
+            $permissao = $this->model->find($id);
 
-            if(!$modulo) {
+            if(!$permissao) {
                 $this->flashMessenger()->setNamespace('error')->addMessage('Permissão não existe!');
 
                 return $this->redirect()->toUrl('/admin/permissoes');
             }
 
-            $this->model->delete($modulo);
+            $this->model->delete($permissao);
 
-            $this->flashMessenger()->setNamespace('success')->addMessage('Permissão excluído com sucesso!');
+            $this->flashMessenger()->setNamespace('success')->addMessage('Permissão excluída com sucesso!');
         }
 
         return $this->redirect()->toUrl('/admin/permissoes');
     }
 
-    /**
-     * @param SegPermissoesModel $permissoes
-     */
-    public function setModel(SegPermissoesModel $model)
+    //ASYNC Methods
+    public function asyncgetrecursosbymoduloAction()
     {
-        $this->model = $model;
+        $id = (int) $this->params()->fromRoute('id');
+
+        if(!$id || !$modulo = $this->modulosModel->find($id)) {
+            return new JsonModel(array('status' => 'error'));
+        }
+
+        if(empty($modulo->recursos)) {
+            new JsonModel(array());
+        }
+
+        foreach ($modulo->recursos as $recurso) {
+            $returData[] = array('rcsId' => $recurso->rcsId, 'rcsNome' => $recurso->rcsNome);
+        }
+
+        return new JsonModel($returData);
     }
 
+
+    // SETTERs
     /**
      * @param PermissaoForm $form
      */
@@ -144,5 +181,29 @@ class PermissoesController extends AbstractActionController
     public function setFormFilter(PermissaoFormFilter $formFilter)
     {
         $this->formFilter = $formFilter;
+    }
+
+    /**
+     * @param SegPermissoesModel $permissoes
+     */
+    public function setModel(SegPermissoesModel $model)
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @param SegModulosModel $modulosModel
+     */
+    public function setModulosModel(SegModulosModel $modulosModel)
+    {
+        $this->modulosModel = $modulosModel;
+    }
+
+    /**
+     * @param SegRecursosModel $recursosModel
+     */
+    public function setRecursosModel($recursosModel)
+    {
+        $this->recursosModel = $recursosModel;
     }
 }

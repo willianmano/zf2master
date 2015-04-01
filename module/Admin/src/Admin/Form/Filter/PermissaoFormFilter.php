@@ -14,7 +14,7 @@ class PermissaoFormFilter extends InputFilter
         $prmRcs->getFilterChain()
             ->attachByName('Int');
         $prmRcs->getValidatorChain()
-            ->attachByName('NotEmpty');
+            ->attachByName('NotEmpty', array('type' => 'integer'));
 
         $prmNome = new Input('prmNome');
         $prmNome->getFilterChain()
